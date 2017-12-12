@@ -1,4 +1,4 @@
-package model;
+package com.vg.elastic.model;
 
 public class Coordinates {
     private int x;

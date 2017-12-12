@@ -1,8 +1,14 @@
-package model;
+package com.vg.elastic.model;
 
+import org.elasticsearch.common.xcontent.XContentBuilder;
+
+import java.io.IOException;
 import java.util.Map;
 
-public class Image {
+import static com.vg.elastic.Constants.BASE_URL;
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+
+public class Image implements JsonBuilder {
     private String name;
     private String _id;
     private String folder;
@@ -76,14 +82,14 @@ public class Image {
     }
 
     @Override
-    public String toString() {
-        return "Image{" +
-                "name='" + name + '\'' +
-                ", _id='" + _id + '\'' +
-                ", folder='" + folder + '\'' +
-                ", url='" + url + '\'' +
-                ", height=" + height +
-                ", width=" + width +
-                '}';
+    public XContentBuilder toJson() throws IOException {
+        return jsonBuilder()
+                .startObject()
+                .field("name", name)
+                .field("folder", folder)
+                .field("url", BASE_URL + name)
+                .field("height", height)
+                .field("width", width)
+                .endObject();
     }
 }

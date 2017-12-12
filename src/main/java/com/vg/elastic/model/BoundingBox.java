@@ -1,21 +1,28 @@
-package model;
+package com.vg.elastic.model;
+
+import java.awt.*;
 
 public class BoundingBox {
     private String _id;
-    private int _version;
     private String boxId;
     private AImage image;
     private Owner owner;
     private Product product;
-    private Coordinates coordinates;
+    private Rectangle coordinates;
 
-    public BoundingBox(String _id, int _version, String boxId, AImage image, Owner owner, Product product, Coordinates coordinates) {
-        this._id = _id;
-        this._version = _version;
-        this.boxId = boxId;
-        this.image = image;
-        this.owner = owner;
-        this.product = product;
+//    public BoundingBox(Map<String, Object> map){
+//        this.boxId = (String) map.get("boxId");
+//        this.image = new AImage();
+//        this.owner = new Owner();
+//        this.product = product;
+//        this.coordinates = (Rectangle) map.get("coordinates");
+//    }
+
+    public Rectangle getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Rectangle coordinates) {
         this.coordinates = coordinates;
     }
 
@@ -25,14 +32,6 @@ public class BoundingBox {
 
     public void set_id(String _id) {
         this._id = _id;
-    }
-
-    public int get_version() {
-        return _version;
-    }
-
-    public void set_version(int _version) {
-        this._version = _version;
     }
 
     public String getBoxId() {
@@ -67,11 +66,4 @@ public class BoundingBox {
         this.product = product;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
 }
