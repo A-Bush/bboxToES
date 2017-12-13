@@ -16,9 +16,8 @@ public class Image implements JsonBuilder {
     private int height;
     private int width;
 
-    public Image(String name, String _id, String folder, String url, int height, int width) {
+    public Image(String name, String folder, String url, int height, int width) {
         this.name = name;
-        this._id = _id;
         this.folder = folder;
         this.url = url;
         this.height = height;

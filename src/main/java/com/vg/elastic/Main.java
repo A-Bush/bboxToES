@@ -1,5 +1,7 @@
 package com.vg.elastic;
 
+import com.sun.org.apache.xpath.internal.operations.String;
+import com.vg.elastic.model.BoundingBox;
 import com.vg.elastic.model.Folder;
 import com.vg.elastic.model.Image;
 import org.elasticsearch.action.get.GetResponse;
@@ -17,7 +19,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.concurrent.ExecutionException;
 
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import static com.vg.elastic.Constants.*;
 
 public class Main {
@@ -52,7 +53,7 @@ public class Main {
 
     public static boolean createFolder(Folder folder, TransportClient client) throws IOException, ExecutionException, InterruptedException {
 
-       RestStatus status = client.prepareIndex(INDEX, FOLDER)
+        RestStatus status = client.prepareIndex(INDEX, FOLDER)
                 .setSource(folder.toJson())
                 .setId(folder.get_id())
                 .get()
@@ -61,43 +62,25 @@ public class Main {
         return RestStatus.CREATED.equals(status);
     }
 
-    public static boolean createImage(Image image) throws IOException {
+    public static boolean createImage(Image image, TransportClient client) throws IOException {
 
-        XContentBuilder builder = jsonBuilder()
-                .startObject()
-                .field("name", image.getName())
-                .field("folder", image.getFolder())
-                .field("url", image.getUrl())
-                .field("height", image.getHeight())
-                .field("width", image.getWidth())
-                .endObject();
-
-        RestStatus status = client.prepareIndex(INDEX, IMAGE)
-                .setSource(builder)
+               RestStatus status = client.prepareIndex(INDEX, IMAGE)
+                .setSource(image.toJson())
                 .get()
                 .status();
 
         return RestStatus.CREATED.equals(status);
     }
 
-//     public static boolean createBBox(BoundingBox bbox) throws IOException {
-//
-//        XContentBuilder builder = jsonBuilder()
-//                .startObject()
-//                .field("name", bbox.getName())
-//                .field("folder", bbox.getFolder())
-//                .field("url", bbox.getUrl())
-//                .field("height", bbox.getHeight())
-//                .field("width", bbox.getWidth())
-//                .endObject();
-//
-//        RestStatus status = client.prepareIndex(INDEX, IMAGE)
-//                .setSource(builder)
-//                .get()
-//                .status();
-//
-//        return RestStatus.CREATED.equals(status);
-//    }
+    public static boolean createBBox(BoundingBox bbox, TransportClient client) throws IOException {
+        System.out.println(bbox.toJson().string());
+        RestStatus status = client.prepareIndex(INDEX, BBOX)
+                .setSource(bbox.toJson())
+                .get()
+                .status();
+
+        return RestStatus.CREATED.equals(status);
+    }
 
 
 }

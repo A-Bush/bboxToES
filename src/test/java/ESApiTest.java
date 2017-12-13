@@ -1,4 +1,5 @@
 import com.vg.elastic.model.*;
+import com.vg.elastic.model.Image;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -19,7 +20,9 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
 
 import static com.vg.elastic.Constants.*;
+import static com.vg.elastic.Main.createBBox;
 import static com.vg.elastic.Main.createFolder;
+import static com.vg.elastic.Main.createImage;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import static org.junit.Assert.assertTrue;
 
@@ -53,6 +56,24 @@ public class ESApiTest {
     }
 
     @Test
+    public void imagesGetTest(){
+        SearchResponse sr = client.prepareSearch(INDEX)
+                .setTypes(IMAGE)
+                .setSize(100)
+                .get();
+        for (SearchHit hit: sr.getHits()){
+            System.out.println(hit.getId() + "   " + hit.getSource());
+        }
+    }
+
+    @Test
+    public void imageIndexTest() throws IOException {
+        Image i = new Image("sample-IMG-20161222-WA0127.jpg", "novus0", "http://localhost:1234/sample-sour_cream.jpg", 960, 1280);
+
+        assertTrue(createImage(i, client));
+    }
+
+    @Test
     public void testBBoxGet(){
         SearchResponse sr = client.prepareSearch(INDEX)
                 .setTypes(BBOX)
@@ -69,30 +90,13 @@ public class ESApiTest {
 
     @Test
     public void testBBoxIndex() throws IOException {
-        BoundingBox bb = new BoundingBox();
         AImage i = new AImage("1493735057738464", "http://localhost:1234/sample-sour_cream.jpg");
         Owner o = new Owner("007", "Test user");
         Product p = new Product("test1", "test1");
-        Rectangle r = new Rectangle(10,10,10,10);
+        Rectangle r = new Rectangle(100,100,100,100);
+        BoundingBox bb = new BoundingBox(i, o, p, r);
 
-
-//        XContentBuilder image = jsonBuilder()
-//                .startObject()
-//                .field();
-
-        XContentBuilder b = jsonBuilder()
-                .startObject()
-                .field("image", bb.getImage())
-                .field("owner", bb.getOwner())
-                .field("product", bb.getProduct())
-                .field("coordinates", bb.getCoordinates())
-                .endObject();
-                RestStatus status = client.prepareIndex(INDEX, BBOX)
-                .setSource(b)
-                .get()
-                .status();
-
-        assertTrue(RestStatus.CREATED.equals(status));
+        assertTrue(createBBox(bb, client));
 
 
     }

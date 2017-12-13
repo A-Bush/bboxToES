@@ -1,22 +1,26 @@
 package com.vg.elastic.model;
 
-import java.awt.*;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 
-public class BoundingBox {
+import java.awt.*;
+import java.io.IOException;
+
+import static com.vg.elastic.Constants.*;
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+
+public class BoundingBox implements JsonBuilder{
     private String _id;
-    private String boxId;
     private AImage image;
     private Owner owner;
     private Product product;
     private Rectangle coordinates;
 
-//    public BoundingBox(Map<String, Object> map){
-//        this.boxId = (String) map.get("boxId");
-//        this.image = new AImage();
-//        this.owner = new Owner();
-//        this.product = product;
-//        this.coordinates = (Rectangle) map.get("coordinates");
-//    }
+    public BoundingBox(AImage image, Owner owner, Product product, Rectangle coordinates) {
+        this.image = image;
+        this.owner = owner;
+        this.product = product;
+        this.coordinates = coordinates;
+    }
 
     public Rectangle getCoordinates() {
         return coordinates;
@@ -32,14 +36,6 @@ public class BoundingBox {
 
     public void set_id(String _id) {
         this._id = _id;
-    }
-
-    public String getBoxId() {
-        return boxId;
-    }
-
-    public void setBoxId(String boxId) {
-        this.boxId = boxId;
     }
 
     public AImage getImage() {
@@ -66,4 +62,28 @@ public class BoundingBox {
         this.product = product;
     }
 
+    @Override
+    public XContentBuilder toJson() throws IOException {
+        return jsonBuilder()
+                .startObject()
+                .startObject(IMAGE)
+                    .field("id", image.getId())
+                    .field("url", image.getUrl())
+                .endObject()
+                .startObject(OWNER)
+                    .field("id", owner.getId())
+                    .field("owner", owner.getOwner())
+                .endObject()
+                .startObject(PRODUCT)
+                    .field("id", product.getId())
+                    .field("name", product.getName())
+                .endObject()
+                .startObject(COORDINATES)
+                    .field("x", coordinates.x)
+                    .field("y", coordinates.y)
+                    .field("width", coordinates.width)
+                    .field("height", coordinates.height)
+                .endObject()
+                .endObject();
+    }
 }

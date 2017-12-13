@@ -3,10 +3,10 @@ package com.vg.elastic.model;
 public class Coordinates {
     private int x;
     private int y;
-    private float height;
-    private float width;
+    private int height;
+    private int width;
 
-    public Coordinates(int x, int y, float height, float width) {
+    public Coordinates(int x, int y, int height, int width) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -29,19 +29,19 @@ public class Coordinates {
         this.y = y;
     }
 
-    public float getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
-    public float getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(float width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 }
