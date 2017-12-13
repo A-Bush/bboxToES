@@ -87,7 +87,7 @@ public class BoundingBox implements JsonBuilder{
                     .field("owner", owner.getOwner())
                 .endObject()
                 .startObject(PRODUCT)
-                    .field("id", product.getId())
+                    .field("id", product.get_id())
                     .field("name", product.getName())
                 .endObject()
                 .startObject(COORDINATES)

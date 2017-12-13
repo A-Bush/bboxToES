@@ -91,7 +91,7 @@ public class ESApiTest {
     public void testBBoxIndex() throws IOException {
         AImage i = new AImage("1493735057738464", "http://localhost:1234/sample-sour_cream.jpg");
         Owner o = new Owner("007", "Test user");
-        Product p = new Product("test1", "test1");
+        Product p = new Product("test1", "test1", "test1");
         Rectangle r = new Rectangle(100,100,100,100);
         History h = new History(DATE_TIME.getMillis(), 0, "empty");
         BoundingBox bb = new BoundingBox("id", i, o, p, r, h);

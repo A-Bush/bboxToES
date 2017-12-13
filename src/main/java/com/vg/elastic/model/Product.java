@@ -7,20 +7,23 @@ import java.io.IOException;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 public class Product implements JsonBuilder {
-    private String id;
+    private String _id;
     private String name;
+    private String sku;
 
-    public Product(String id, String name) {
-        this.id = id;
+
+    public Product(String _id, String name, String sku) {
+        this._id = _id;
         this.name = name;
+        this.sku = sku;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -31,12 +34,23 @@ public class Product implements JsonBuilder {
         this.name = name;
     }
 
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
     @Override
     public XContentBuilder toJson() throws IOException {
         return jsonBuilder()
                 .startObject()
-                .field("id", id)
+                .field("sku", sku)
                 .field("name", name)
+                .startArray("cat")
+                    .value("TAILSPIN")
+                .endArray()
                 .endObject();
     }
 }
