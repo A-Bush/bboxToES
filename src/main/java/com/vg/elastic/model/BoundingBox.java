@@ -14,12 +14,24 @@ public class BoundingBox implements JsonBuilder{
     private Owner owner;
     private Product product;
     private Rectangle coordinates;
+    private History history;
 
-    public BoundingBox(AImage image, Owner owner, Product product, Rectangle coordinates) {
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
+    }
+
+    public BoundingBox(String _id, AImage image, Owner owner, Product product, Rectangle coordinates, History history) {
+        this._id = _id;
         this.image = image;
         this.owner = owner;
         this.product = product;
         this.coordinates = coordinates;
+        this.history = history;
+
     }
 
     public Rectangle getCoordinates() {
@@ -83,6 +95,11 @@ public class BoundingBox implements JsonBuilder{
                     .field("y", coordinates.y)
                     .field("width", coordinates.width)
                     .field("height", coordinates.height)
+                .endObject()
+                .startObject(HISTORY)
+                    .field("modified", history.getModified())
+                    .field("version", history.getVersion())
+                    .field("action", history.getVersion())
                 .endObject()
                 .endObject();
     }

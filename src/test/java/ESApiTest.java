@@ -4,8 +4,6 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
@@ -24,6 +22,7 @@ import static com.vg.elastic.Main.createBBox;
 import static com.vg.elastic.Main.createFolder;
 import static com.vg.elastic.Main.createImage;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ESApiTest {
@@ -68,7 +67,7 @@ public class ESApiTest {
 
     @Test
     public void imageIndexTest() throws IOException {
-        Image i = new Image("sample-IMG-20161222-WA0127.jpg", "novus0", "http://localhost:1234/sample-sour_cream.jpg", 960, 1280);
+        Image i = new Image("sample-IMG-20161222-WA0127.jpg","sample-IMG-20161222-WA0127.jpg", "novus0", "http://localhost:1234/sample-sour_cream.jpg", 960, 1280);
 
         assertTrue(createImage(i, client));
     }
@@ -94,10 +93,21 @@ public class ESApiTest {
         Owner o = new Owner("007", "Test user");
         Product p = new Product("test1", "test1");
         Rectangle r = new Rectangle(100,100,100,100);
-        BoundingBox bb = new BoundingBox(i, o, p, r);
+        History h = new History(DATE_TIME.getMillis(), 0, "empty");
+        BoundingBox bb = new BoundingBox("id", i, o, p, r, h);
 
         assertTrue(createBBox(bb, client));
 
 
     }
+
+    @Test
+    public void test(){
+        String s1 = "199v9.PNG";
+        String s2 = "100ColorKey.PNG";
+        CharSequence c = "ColorKey";
+        assertFalse(s1.contains(c));
+        assertTrue(s2.contains(c));
+    }
+
 }
