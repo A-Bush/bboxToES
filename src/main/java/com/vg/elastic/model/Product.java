@@ -49,7 +49,7 @@ public class Product implements JsonBuilder {
                 .field("sku", sku)
                 .field("name", name)
                 .startArray("cat")
-                    .value("TAILSPIN")
+                    .value("TALESPIN")
                 .endArray()
                 .endObject();
     }

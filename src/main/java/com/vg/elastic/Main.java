@@ -36,7 +36,7 @@ public class Main {
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
 
 
-        final File flythroughDir = new File("/Users/abush/renders/test");
+        final File flythroughDir = new File(RENDERS_FOLDER);
         Set<String> labels = new HashSet<>();
         Set<String> images = new HashSet<>();
 
@@ -126,7 +126,6 @@ public class Main {
         System.out.println(bbox.toJson().string());
         RestStatus status = client.prepareIndex(INDEX, BBOX)
                 .setSource(bbox.toJson())
-                .setId(bbox.get_id())
                 .get()
                 .status();
 
