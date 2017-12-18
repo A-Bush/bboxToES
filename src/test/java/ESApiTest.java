@@ -67,7 +67,7 @@ public class ESApiTest {
 
     @Test
     public void imageIndexTest() throws IOException {
-        Image i = new Image("sample-IMG-20161222-WA0127.jpg","sample-IMG-20161222-WA0127.jpg", "novus0", "http://localhost:1234/sample-sour_cream.jpg", 960, 1280);
+        Image i = new Image("sample-IMG-20161222-WA0127.jpg", "novus0", "http://localhost:1234/sample-sour_cream.jpg", 960, 1280);
 
         assertTrue(createImage(i, client));
     }
@@ -89,7 +89,7 @@ public class ESApiTest {
 
     @Test
     public void testBBoxIndex() throws IOException {
-        AImage i = new AImage("1493735057738464", "http://localhost:1234/sample-sour_cream.jpg");
+        Image i = new Image("sample-IMG-20161222-WA0127.jpg", "novus0", "http://localhost:1234/sample-sour_cream.jpg", 960, 1280);
         Owner o = new Owner("007", "Test user");
         Product p = new Product("test1", "test1", "test1");
         Rectangle r = new Rectangle(100,100,100,100);

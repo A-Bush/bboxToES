@@ -10,7 +10,7 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 public class BoundingBox implements JsonBuilder{
     private String _id;
-    private AImage image;
+    private Image image;
     private Owner owner;
     private Product product;
     private Rectangle coordinates;
@@ -24,7 +24,7 @@ public class BoundingBox implements JsonBuilder{
         this.history = history;
     }
 
-    public BoundingBox(String _id, AImage image, Owner owner, Product product, Rectangle coordinates, History history) {
+    public BoundingBox(String _id, Image image, Owner owner, Product product, Rectangle coordinates, History history) {
         this._id = _id;
         this.image = image;
         this.owner = owner;
@@ -50,11 +50,11 @@ public class BoundingBox implements JsonBuilder{
         this._id = _id;
     }
 
-    public AImage getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(AImage image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 
@@ -79,7 +79,7 @@ public class BoundingBox implements JsonBuilder{
         return jsonBuilder()
                 .startObject()
                 .startObject(IMAGE)
-                    .field("id", image.getId())
+                    .field("id", image.get_id())
                     .field("url", image.getUrl())
                 .endObject()
                 .startObject(OWNER)

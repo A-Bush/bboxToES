@@ -39,8 +39,8 @@ public class Main {
         final File flythroughDir = new File(RENDERS_FOLDER);
         Set<String> labels = new HashSet<>();
         Set<String> images = new HashSet<>();
-
-        Folder folder = new Folder("test", "test");
+        String folderName = flythroughDir.getName();
+        Folder folder = new Folder(folderName, folderName);
         System.out.println("folder created: " + createFolder(folder, client));
 
         Stream<VGBBox> bboxes = RendersToBBoxes.parseFlyThrough(flythroughDir);
@@ -54,7 +54,8 @@ public class Main {
             images.add(imgName);
 
             System.out.println(Thread.currentThread() + ". " + vgbBox);
-            AImage i = new AImage(vgbBox.imageFile.getName(), BASE_URL + vgbBox.imageFile.getName());
+            Image i = new Image(vgbBox.imageFile.getName(), folder.getName(), BASE_URL + vgbBox.imageFile.getName(),IMAGE_WIDTH, IMAGE_HEIGHT);
+            i.set_id(folderName + i.getName());
             Owner o = new Owner("Generated", "Generated");
             Product p = new Product(vgbBox.nameMask.Name, vgbBox.nameMask.Name, vgbBox.nameMask.Name);
             Rectangle c = vgbBox.rectBbox;
@@ -75,7 +76,8 @@ public class Main {
 
         images.stream()
                 .map(img -> {
-                    Image i = new Image(img, img, folder.getName(), BASE_URL+img, 1280, 720);
+                    Image i = new Image(img, folder.getName(), BASE_URL+img, IMAGE_WIDTH, IMAGE_HEIGHT);
+                    i.set_id(folderName + img);
                     try {
                         return createImage(i, client);
                     } catch (IOException e) {
